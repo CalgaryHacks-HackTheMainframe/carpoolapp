@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/cupertino.dart';
 import 'Task.dart';
+import 'Course.dart';
 
 class provider extends ChangeNotifier {
   final List<Task> _tasks = [];
@@ -13,5 +14,11 @@ class provider extends ChangeNotifier {
   void addTask(Task task) {
     _tasks.add(task);
     notifyListeners();
+  }
+
+  final List<Course> xcourses = [];
+  List<Course> get courses => xcourses;
+  void addCourse(Course course) {
+    xcourses.add(course);
   }
 }

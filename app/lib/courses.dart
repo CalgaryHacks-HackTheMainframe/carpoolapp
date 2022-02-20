@@ -1,5 +1,7 @@
 import 'package:app/Course.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'provider.dart';
 
 class courses extends StatefulWidget {
   @override
@@ -7,8 +9,8 @@ class courses extends StatefulWidget {
 }
 
 class mycourses extends State<courses> {
-  List<Course> _courses = [];
   createAlertDialog(BuildContext context) {
+    final _provider = Provider.of<provider>(context, listen: false);
     TextEditingController name = new TextEditingController();
     return showDialog(
         context: context,
@@ -30,7 +32,8 @@ class mycourses extends State<courses> {
                   child: Text("OK"),
                   onPressed: () {
                     setState(() {
-                      _courses.add(Course(courseName: name.text, tasks: []));
+                      xadd(name.text, _provider);
+                      Navigator.pop(context);
                     });
                   }),
               MaterialButton(
@@ -45,6 +48,7 @@ class mycourses extends State<courses> {
 
   @override
   Widget build(BuildContext context) {
+    final _provider = Provider.of<provider>(context, listen: false);
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(
@@ -61,13 +65,14 @@ class mycourses extends State<courses> {
                 Expanded(
                   child: ListView.builder(
                     padding: const EdgeInsets.all(8),
-                    itemCount: _courses.length,
+                    itemCount: _provider.xcourses.length,
                     itemBuilder: (BuildContext context, int index) {
                       return Container(
                         height: 50,
                         color: Colors.deepPurple,
                         child: Center(
-                            child: Text('${_courses[index].courseName}')),
+                            child: Text(
+                                '${_provider.xcourses[index].courseName}')),
                       );
                     },
                   ),
@@ -81,5 +86,9 @@ class mycourses extends State<courses> {
                 )
               ],
             )));
+  }
+
+  void xadd(String name, final xprovider) {
+    xprovider.xcourses.add(Course(courseName: name, tasks: []));
   }
 }
