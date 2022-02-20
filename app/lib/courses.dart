@@ -24,7 +24,7 @@ class mycourses extends State<courses> {
               children: <Widget>[
                 TextFormField(
                   controller: name,
-                  decoration: InputDecoration(hintText: 'Name of Task'),
+                  decoration: InputDecoration(hintText: 'Name of Course'),
                 )
               ],
             ),
@@ -70,42 +70,49 @@ class mycourses extends State<courses> {
                     itemCount: _provider.xcourses.length,
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(
-                        onTap: () {
-                          AlertDialog alert = AlertDialog(
-                            title:
-                                Text("${_provider.xcourses[index].courseName}"),
-                            content: Column(children: <Widget>[
-                              Text('Tasks for this course:\n'),
-                              Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    Container(
-                                        height: 300.0,
-                                        width: 300.0,
-                                        child: ListView.builder(
-                                            shrinkWrap: true,
-                                            itemCount: _provider
-                                                .xcourses[index].tasks.length,
-                                            itemBuilder:
-                                                (BuildContext context, int j) {
-                                              return ListTile(
-                                                title: Text(
-                                                    "${_provider.xcourses[index].tasks[j].name}"),
-                                              );
-                                            })),
-                                  ])
-                            ]),
-                          );
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return alert;
-                              });
-                        },
-                        child: Center(
-                            child: Text(
-                                '${_provider.xcourses[index].courseName}')),
-                      );
+                          onTap: () {
+                            AlertDialog alert = AlertDialog(
+                              title: Text(
+                                  "${_provider.xcourses[index].courseName}"),
+                              content: Column(children: <Widget>[
+                                Text('Tasks for this course:\n'),
+                                Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      Container(
+                                          height: 300.0,
+                                          width: 300.0,
+                                          child: ListView.builder(
+                                              shrinkWrap: true,
+                                              itemCount: _provider
+                                                  .xcourses[index].tasks.length,
+                                              itemBuilder:
+                                                  (BuildContext context,
+                                                      int j) {
+                                                return ListTile(
+                                                  title: Text(
+                                                      "${_provider.xcourses[index].tasks[j].name}"),
+                                                );
+                                              })),
+                                    ])
+                              ]),
+                            );
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return alert;
+                                });
+                          },
+                          child: Container(
+                              height: 50.00,
+                              padding: EdgeInsets.all(5.0),
+                              child: Material(
+                                borderRadius: BorderRadius.circular(6.0),
+                                color: Colors.blueAccent,
+                                child: Center(
+                                    child: Text(
+                                        '${_provider.xcourses[index].courseName}')),
+                              )));
                     },
                   ),
                 ),

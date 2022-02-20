@@ -1,3 +1,4 @@
+import 'package:app/Course.dart';
 import 'package:app/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -121,6 +122,7 @@ class addTask extends StatelessWidget {
 
       final _provider = Provider.of<provider>(context, listen: false);
       _provider.addTask(task);
+
       Navigator.of(context).pop();
     }
   }
