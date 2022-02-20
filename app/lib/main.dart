@@ -1,5 +1,6 @@
-import 'package:app/listview.dart';
+import 'package:app/addTask.dart';
 import 'package:flutter/material.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 void main() => runApp(const MyApp());
 
@@ -24,9 +25,15 @@ class MyStatelessWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Student To do App'),
+        title: const Text('Student To Do App'),
       ),
-      body: const Center(child: Text('Add a task!')),
+      body: Container(
+        child: SfCalendar(
+          view: CalendarView.month,
+          showNavigationArrow: true,
+        ),
+      ),
+      //const Center(child: Text('Add a task!')),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           runApp(MaterialApp(home: addTask()));
