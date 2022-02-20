@@ -28,6 +28,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   syncfusion_flutter_datepicker: 19.4.52
+  syncfusion_flutter_calendar: 19.4.52
   flutter: 
     sdk: flutter
 
