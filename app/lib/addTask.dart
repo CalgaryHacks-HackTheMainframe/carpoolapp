@@ -7,6 +7,7 @@ import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:provider/provider.dart';
 import 'package:app/Task.dart';
 import 'package:intl/intl.dart';
+import 'package:app/main.dart';
 
 class addTask extends StatelessWidget {
   final _key = GlobalKey<FormBuilderState>();
@@ -26,12 +27,17 @@ class addTask extends StatelessWidget {
             visualDensity: VisualDensity.adaptivePlatformDensity),
         home: Scaffold(
           appBar: AppBar(
-            leading: BackButton(),
-            // actions: buildEditingActions(),
+            leading: BackButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
             centerTitle: true,
             title: Text("Add New Task"),
           ),
-          body: FormBuilder(
+          body: Container(
+            margin: EdgeInsets.all(8.0),
+            child: FormBuilder(
             key: _key,
             child: Column(children: [
               TextFormField(
@@ -54,7 +60,6 @@ class addTask extends StatelessWidget {
                   return null;
                 },
               ),
-              Text("\From:"),
               FormBuilderDateTimePicker(
                 name: 'From_time',
                 inputType: InputType.both,
@@ -63,7 +68,6 @@ class addTask extends StatelessWidget {
                 ),
                 initialTime: TimeOfDay(hour: 8, minute: 0),
               ),
-              Text("\To:"),
               FormBuilderDateTimePicker(
                 name: 'To_time',
                 inputType: InputType.both,
@@ -72,7 +76,6 @@ class addTask extends StatelessWidget {
                 ),
                 initialTime: TimeOfDay(hour: 8, minute: 0),
               ),
-              Text("\Description:"),
               Card(
                   color: Colors.white70,
                   child: Padding(
@@ -81,7 +84,7 @@ class addTask extends StatelessWidget {
                         controller: description_i,
                         maxLines: 8,
                         decoration: InputDecoration.collapsed(
-                            hintText: "Enter your text here"),
+                            hintText: "Task Description"),
                       ))),
               Row(children: <Widget>[
                 Expanded(
@@ -107,7 +110,7 @@ class addTask extends StatelessWidget {
               ]),
             ]),
           ),
-        ));
+    )));
   }
 
   Future saveForm(BuildContext context) async {
