@@ -12,7 +12,16 @@ class listView extends StatelessWidget {
   Widget build(BuildContext context) {
     final name_provider = Provider.of<provider>(context);
     final found_tasks = name_provider.taskFromDate;
-    return Container(
+    return Scaffold(
+        appBar: AppBar(
+        title: const Text('Tasks'),
+          leading: BackButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ),
+      body: Container(
       child: SfCalendar(
         dataSource: DataSource(found_tasks),
         view: CalendarView.schedule,
@@ -33,6 +42,7 @@ class listView extends StatelessWidget {
             )
         ),
       ),
+    ),
     );
   }
 }
