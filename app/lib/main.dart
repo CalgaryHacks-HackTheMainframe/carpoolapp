@@ -1,4 +1,4 @@
-import 'package:app/addTask.dart';
+import 'package:app/listview.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(const MyApp());
@@ -24,7 +24,7 @@ class MyStatelessWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Student Todo App'),
+        title: const Text('Student To do App'),
       ),
       body: const Center(child: Text('Add a task!')),
       floatingActionButton: FloatingActionButton(
