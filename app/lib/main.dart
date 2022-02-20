@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'Task.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
+import 'package:app/listView.dart';
 
 void main() => runApp(const MyApp());
 
@@ -53,15 +54,16 @@ class Home extends StatelessWidget {
       ),
       body: Container(
         child: SfCalendar(
-          dataSource: DataSource(tasks),
-          view: CalendarView.week,
-          showNavigationArrow: true,
-          initialSelectedDate: DateTime.now(),
-          onLongPress: (details) {
-            final _provider = Provider.of<provider>(context, listen: false);
-            _provider.setDate(details.date!);
-          },
-        ),
+            dataSource: DataSource(tasks),
+            view: CalendarView.month,
+            showNavigationArrow: true,
+            initialSelectedDate: DateTime.now(),
+            onLongPress: (details) {
+              final _provider = Provider.of<provider>(context, listen: false);
+              _provider.setDate(details.date!);
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => listView()));
+            }),
       ),
       //const Center(child: Text('Add a task!')),
       floatingActionButton: FloatingActionButton(
