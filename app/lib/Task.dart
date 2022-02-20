@@ -3,7 +3,6 @@ class Task {
   final String course_name;
   final DateTime from;
   final DateTime to;
-  final String time;
   final String description;
 
   const Task({
@@ -11,7 +10,6 @@ class Task {
     required this.course_name,
     required this.from,
     required this.to,
-    required this.time,
     required this.description,
   });
 }
