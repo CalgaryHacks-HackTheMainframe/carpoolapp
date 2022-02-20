@@ -1,14 +1,13 @@
 import 'package:flutter/foundation.dart';
-
 import 'package:flutter/cupertino.dart';
 import 'Task.dart';
 
 class provider extends ChangeNotifier {
   final List<Task> _tasks = [];
-
   List<Task> get tasks => _tasks;
   DateTime _currDate = DateTime.now();
   DateTime get chosenDate => _currDate;
+  List<Task> get taskFromDate => _tasks;
 
   void setDate(DateTime date) => _currDate = date;
   void addTask(Task task) {

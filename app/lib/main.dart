@@ -1,8 +1,10 @@
 import 'package:app/addTask.dart';
+import 'package:app/courses.dart';
 import 'package:app/dataSource.dart';
 import 'package:app/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'Task.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 void main() => runApp(const MyApp());
@@ -32,17 +34,21 @@ class Home extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Student To Do App'),
         actions: <Widget>[
-          PopupMenuButton<String>(
-            onSelected: handleClick,
-            itemBuilder: (BuildContext context) {
-              return {'Day View', 'Courses'}.map((String choice) {
-                return PopupMenuItem<String>(
-                  value: choice,
-                  child: Text(choice),
-                );
-              }).toList();
+          PopupMenuButton(
+            itemBuilder: (content) => [
+              PopupMenuItem(value: 1, child: Text("Courses")),
+              PopupMenuItem(value: 2, child: Text("View Tasks")),
+            ],
+            onSelected: (int menu) {
+              if (menu == 1) {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => courses()));
+              } else if (menu == 2) {
+                // Navigator.push(context,
+                //     MaterialPageRoute(builder: (context) => courses()));
+              }
             },
-          ),
+          )
         ],
       ),
       body: Container(
@@ -68,16 +74,5 @@ class Home extends StatelessWidget {
         child: const Icon(Icons.add_box),
       ),
     );
-  }
-
-  void handleClick(String value) {
-    switch (value) {
-      case 'Day View':
-        // Navigator.of(context)??? need context
-        //     .push(MaterialPageRoute(builder: (context) => _NameofdayView()));
-        break;
-      case 'Courses':
-        break;
-    }
   }
 }

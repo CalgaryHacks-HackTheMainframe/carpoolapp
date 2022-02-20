@@ -1,13 +1,8 @@
-import 'dart:js';
-
 import 'package:app/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:provider/provider.dart';
 import 'package:app/Task.dart';
-import 'package:intl/intl.dart';
-import 'package:app/main.dart';
 
 class addTask extends StatelessWidget {
   final _key = GlobalKey<FormBuilderState>();
@@ -26,91 +21,91 @@ class addTask extends StatelessWidget {
             primarySwatch: Colors.blue,
             visualDensity: VisualDensity.adaptivePlatformDensity),
         home: Scaffold(
-          appBar: AppBar(
-            leading: BackButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
+            appBar: AppBar(
+              leading: BackButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+              centerTitle: true,
+              title: Text("Add New Task"),
             ),
-            centerTitle: true,
-            title: Text("Add New Task"),
-          ),
-          body: Container(
-            margin: EdgeInsets.all(8.0),
-            child: FormBuilder(
-            key: _key,
-            child: Column(children: [
-              TextFormField(
-                controller: task_i,
-                decoration: InputDecoration(hintText: 'Name of Task'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
+            body: Container(
+              margin: EdgeInsets.all(8.0),
+              child: FormBuilder(
+                key: _key,
+                child: Column(children: [
+                  TextFormField(
+                    controller: task_i,
+                    decoration: InputDecoration(hintText: 'Name of Task'),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    controller: course_i,
+                    decoration: InputDecoration(hintText: 'Course Name'),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    },
+                  ),
+                  FormBuilderDateTimePicker(
+                    name: 'From_time',
+                    inputType: InputType.both,
+                    decoration: InputDecoration(
+                      labelText: 'Start Time',
+                    ),
+                    initialTime: TimeOfDay(hour: 8, minute: 0),
+                  ),
+                  FormBuilderDateTimePicker(
+                    name: 'To_time',
+                    inputType: InputType.both,
+                    decoration: InputDecoration(
+                      labelText: 'End Time',
+                    ),
+                    initialTime: TimeOfDay(hour: 8, minute: 0),
+                  ),
+                  Card(
+                      color: Colors.white70,
+                      child: Padding(
+                          padding: EdgeInsets.all(10.0),
+                          child: TextField(
+                            controller: description_i,
+                            maxLines: 8,
+                            decoration: InputDecoration.collapsed(
+                                hintText: "Task Description"),
+                          ))),
+                  Row(children: <Widget>[
+                    Expanded(
+                      child: MaterialButton(
+                          color: Theme.of(context).colorScheme.secondary,
+                          child: Text(
+                            "Submit",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          onPressed: () {
+                            _key.currentState!.save();
+                            if (_key.currentState!.validate()) {
+                              fromDate = _key.currentState!.value['From_time'];
+                              toDate = _key.currentState!.value['To_time'];
+                              print(fromDate);
+                              print(toDate);
+                              saveForm(context);
+                            } else {
+                              print("validation failed");
+                            }
+                          }),
+                    )
+                  ]),
+                ]),
               ),
-              TextFormField(
-                controller: course_i,
-                decoration: InputDecoration(hintText: 'Course Name'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-              ),
-              FormBuilderDateTimePicker(
-                name: 'From_time',
-                inputType: InputType.both,
-                decoration: InputDecoration(
-                  labelText: 'Start Time',
-                ),
-                initialTime: TimeOfDay(hour: 8, minute: 0),
-              ),
-              FormBuilderDateTimePicker(
-                name: 'To_time',
-                inputType: InputType.both,
-                decoration: InputDecoration(
-                  labelText: 'End Time',
-                ),
-                initialTime: TimeOfDay(hour: 8, minute: 0),
-              ),
-              Card(
-                  color: Colors.white70,
-                  child: Padding(
-                      padding: EdgeInsets.all(10.0),
-                      child: TextField(
-                        controller: description_i,
-                        maxLines: 8,
-                        decoration: InputDecoration.collapsed(
-                            hintText: "Task Description"),
-                      ))),
-              Row(children: <Widget>[
-                Expanded(
-                  child: MaterialButton(
-                      color: Theme.of(context).colorScheme.secondary,
-                      child: Text(
-                        "Submit",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      onPressed: () {
-                        _key.currentState!.save();
-                        if (_key.currentState!.validate()) {
-                          fromDate = _key.currentState!.value['From_time'];
-                          toDate = _key.currentState!.value['To_time'];
-                          print(fromDate);
-                          print(toDate);
-                          saveForm(context);
-                        } else {
-                          print("validation failed");
-                        }
-                      }),
-                )
-              ]),
-            ]),
-          ),
-    )));
+            )));
   }
 
   Future saveForm(BuildContext context) async {
