@@ -4,6 +4,7 @@ import 'package:app/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
+import 'package:app/listView.dart';
 
 void main() => runApp(const MyApp());
 
@@ -38,6 +39,10 @@ class Home extends StatelessWidget {
           view: CalendarView.month,
           showNavigationArrow: true,
           initialSelectedDate: DateTime.now(),
+          onLongPress: (details) {
+            final _provider = Provider.of<provider>(context, listen: false);
+            _provider.setDate(details.date!);
+          }
         ),
       ),
       //const Center(child: Text('Add a task!')),
