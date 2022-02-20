@@ -42,6 +42,8 @@ class Home extends StatelessWidget {
           onLongPress: (details) {
             final _provider = Provider.of<provider>(context, listen: false);
             _provider.setDate(details.date!);
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => listView()));
           }
         ),
       ),

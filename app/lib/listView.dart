@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:provider/provider.dart';
+import 'provider.dart';
+import 'dataSource.dart';
+import 'Task.dart';
 
 class listView extends StatelessWidget {
 
 
   @override
   Widget build(BuildContext context) {
-    final name_provider = Provider.of<provider>(context, listen: false);
-    final found_tasks = provider.taskFromDate;
+    final name_provider = Provider.of<provider>(context);
+    final found_tasks = name_provider.taskFromDate;
     return Container(
       child: SfCalendar(
-        dataSource: DataSource(provider.tasks),
+        dataSource: DataSource(found_tasks),
         view: CalendarView.schedule,
         scheduleViewSettings: ScheduleViewSettings(
-            /*hideEmptyScheduleWeek: true,*/
             dayHeaderSettings: DayHeaderSettings(
                 dayFormat: 'EEEE',
                 width: 70,
