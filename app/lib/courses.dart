@@ -1,6 +1,7 @@
 import 'package:app/Course.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'Task.dart';
 import 'provider.dart';
 
 class courses extends StatefulWidget {
@@ -49,6 +50,7 @@ class mycourses extends State<courses> {
   @override
   Widget build(BuildContext context) {
     final _provider = Provider.of<provider>(context, listen: false);
+    refresh(_provider);
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(
@@ -67,9 +69,39 @@ class mycourses extends State<courses> {
                     padding: const EdgeInsets.all(8),
                     itemCount: _provider.xcourses.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return Container(
-                        height: 50,
-                        color: Colors.deepPurple,
+                      return GestureDetector(
+                        onTap: () {
+                          AlertDialog alert = AlertDialog(
+                            title:
+                                Text("${_provider.xcourses[index].courseName}"),
+                            content: Column(children: <Widget>[
+                              Text('Tasks for this course:\n'),
+                              Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    Container(
+                                        height: 300.0,
+                                        width: 300.0,
+                                        child: ListView.builder(
+                                            shrinkWrap: true,
+                                            itemCount: _provider
+                                                .xcourses[index].tasks.length,
+                                            itemBuilder:
+                                                (BuildContext context, int j) {
+                                              return ListTile(
+                                                title: Text(
+                                                    "${_provider.xcourses[index].tasks[j].name}"),
+                                              );
+                                            })),
+                                  ])
+                            ]),
+                          );
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return alert;
+                              });
+                        },
                         child: Center(
                             child: Text(
                                 '${_provider.xcourses[index].courseName}')),
@@ -89,6 +121,26 @@ class mycourses extends State<courses> {
   }
 
   void xadd(String name, final xprovider) {
-    xprovider.xcourses.add(Course(courseName: name, tasks: []));
+    List<Task> found = [];
+    List<Task> allTasks = xprovider.tasks;
+    allTasks.forEach((t) {
+      if (name == t.course_name) {
+        found.add(t);
+      }
+    });
+    xprovider.xcourses.add(Course(courseName: name, tasks: found));
+  }
+
+  void refresh(final xprovider) {
+    List<Course> allC = xprovider.xcourses;
+    List<Task> allT = xprovider.tasks;
+    allT.forEach((t) {
+      allC.forEach((c) {
+        if (c.courseName == t.course_name && !c.tasks.contains(t)) {
+          xprovider.addTtoC(c, t);
+          print("changed");
+        }
+      });
+    });
   }
 }
