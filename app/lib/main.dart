@@ -36,7 +36,8 @@ class MyStatelessWidget extends StatelessWidget {
       //const Center(child: Text('Add a task!')),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          runApp(MaterialApp(home: addTask()));
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => MaterialApp(home: addTask())));
         },
         backgroundColor: Colors.green,
         child: const Icon(Icons.add_box),
